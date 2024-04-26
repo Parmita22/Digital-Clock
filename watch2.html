@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+         
+        *{
+            padding: 0;margin: 0;box-sizing: border-box;
+            font-family: 'Poppins',sans-serif;
+        }
+        body{
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             background-color: #201a33;
+
+        }
+    .digital-clock{
+        position: relative;
+        color: white;
+        background: #201a33;
+        width: 451px;
+        padding: 20px 45px;
+        box-shadow: 0 10px 25px rgb(60, 56, 81);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        flex-direction: column;
+
+
+
+    }
+    .time
+    {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+    }
+    .hours,.dots,.minutes{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight:600px ;
+        padding: 0 10px;
+        line-height: 125px;
+        
+    }
+    .hours,.minutes{
+        font-size: 6.5em;
+        width: 125px;
+
+    }
+    .dots{
+        font-size: 5em;
+        color: #c8b15c;
+
+    }
+    .hours{
+        background: -webkit-linear-gradient(90deg,#634dff,#5fd4ff);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+    .minutes{
+        background: -webkit-linear-gradient(90deg,#ff5e9a,#ffb960);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+    
+    .right-side{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 10px;
+
+    }
+    .period,.seconds{
+        font-size: 1.2em;
+        font-weight: 500;
+    }
+    .period{
+        transform: translateY(-20px);
+        background: -webkit-linear-gradient(90deg,#f7b63f,#faf879);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+    .seconds{
+        transform: translatey(16px);
+        /* transform: translateY(-20px); */
+        background: -webkit-linear-gradient(90deg,#24ff6d,#2f93f1);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+    .calendar{
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.3em;
+        font-weight: 500;
+        margin-bottom: 20px;
+        background: -webkit-linear-gradient(90deg,#ae4af6,#ff98d1);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        
+    }
+    .day-name,.day-number,.year{
+        margin-left: 8px;
+    }
+    .month-name{
+        /* margin: 8px; */
+    }
+    .day-name{
+        /* margin-left: 8px; */
+    }
+    .day-number{
+
+        /* margin-right: 8px; */
+    }
+    /* .year{
+        margin: 8px ;
+    } */
+.year{
+    margin-left: 8px;
+}
+    </style>
+</head>
+<body>
+    <div class="digital-clock">
+        <div class="time">
+            <span class="hours">08</span>
+            <span class="dots">:</span>
+            <span class="minutes">30</span>
+            <div class="right-side">
+                <span class="period">AM/PM</span>
+                <span class="seconds">20</span>
+
+            </div>
+        </div>
+        <div class="calendar">
+            <span class="month-name">Mar</span>,
+            <span class="day-name">Sunday</span>
+            <span class="day-number">6</span>
+            <span class="year">2023</span>
+
+
+        </div>
+       
+
+    </div>
+
+    <script>
+        // Function to update the clock
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            // const is24HourFormat = document.getElementById('formatToggle').checked; // Check if 24hr format is selected
+            let period = "AM";
+            if(hours >=12)
+            {
+                period = "PM"
+            }
+            hours = hours >12 ? hours%12 : hours;
+
+            if( hours<10){
+                hours = "0"+hours
+            }if( minutes<10){
+                minutes = "0"+ minutes
+            }if( seconds<10){
+                seconds = "0"+ seconds
+            }
+
+    
+           
+    
+            // Update the digital clock
+            document.querySelector(".hours").textContent = hours.toString().padStart(2, '0');
+            document.querySelector(".minutes").textContent = minutes.toString().padStart(2, '0');
+            document.querySelector(".seconds").textContent = seconds.toString().padStart(2, '0');
+            document.querySelector(".period").textContent = period;
+    
+            // Update the calendar
+            document.querySelector(".month-name").textContent = now.toLocaleString('default', { month: 'short' });
+            document.querySelector(".day-name").textContent = now.toLocaleString('default', { weekday: 'long' });
+            document.querySelector(".day-number").textContent = now.getDate();
+            document.querySelector(".year").textContent = now.getFullYear();
+        }
+    
+        // Initial call to display the clock immediately
+        updateClock();
+        // Set the clock to update every second
+        setInterval(updateClock, 1000);
+    
+        // Add listener for the format toggle
+        document.getElementById('formatToggle').addEventListener('change', updateClock);
+
+
+    </script>
+    
+</body>
+</html>
